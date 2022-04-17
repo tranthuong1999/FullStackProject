@@ -71,7 +71,7 @@ module.exports = async (env, agrv) => {
 	}
 	return {
 		entry: [
-			"./src/index.tsx"
+			"./src/index.jsx"
 			// "./src/index.scss"
 		],
 		output: {

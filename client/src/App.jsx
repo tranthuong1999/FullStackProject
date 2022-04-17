@@ -1,6 +1,7 @@
+import { useEffect } from 'react';
 import { LoadingOutlined } from '@ant-design/icons';
 import { message, Spin } from 'antd';
-import { useEffect } from 'react';
+import { formatTimeStr } from 'antd/lib/statistic/utils';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import HomeView from './components/HomeView';
@@ -65,8 +66,8 @@ function App() {
             </Spin>
           </Route>
         </Switch>
-
-      </Router>
+       </Router>
+     
   );
 }
 
