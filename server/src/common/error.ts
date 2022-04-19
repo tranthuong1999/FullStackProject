@@ -16,6 +16,12 @@ export class BadRequestError extends ServerError {
   }
 }
 
+export class InvalidParamsError extends ServerError {
+  constructor({ ...payload }: any = {}) {
+    super({ status: 400, message: 'Invalid parameters', ...payload });
+  }
+}
+
 export class UnauthorizedError extends ServerError {
   constructor({ ...payload }: any = {}) {
     super({ status: 401, message: 'Unauthorized', ...payload });
