@@ -7,6 +7,14 @@ import asyncHandler from '../utils/asyncHandler';
 
 const customerRouter = Router();
 
+//get list
+customerRouter.delete(
+  '/',
+  asyncHandler(async (req, res) => {
+    return await customerService.get({})
+  })
+);
+
 //create customer
 customerRouter.post(
   '/',
@@ -24,6 +32,15 @@ customerRouter.put(
     const {id} =  req.params;
     console.log('Id',id);
     return await customerService.update({id: id, update: req.body})
+  })
+);
+
+//delete customer
+customerRouter.delete(
+  '/:id',
+  asyncHandler(async (req, res) => {
+    const {id} =  req.params;
+    return await customerService.delete({id: id, update: req.body})
   })
 );
 

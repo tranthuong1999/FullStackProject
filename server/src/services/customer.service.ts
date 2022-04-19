@@ -43,5 +43,13 @@ export default {
       console.log('error:',error)
       throw new ServerError({ data: -1, message: "Register error (Transaction)" });
     }
+  },
+  delete: async (args: {id: string, update: string }) => {
+    const { id,update} = args;
+    console.log('Delete update id:',id);
+    //Viet them code vao day
+  },
+  get: async (args: { }) => {
+    //Viet them code vao day
   }
 }
