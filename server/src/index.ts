@@ -7,6 +7,7 @@ import dotenv from './utils/dotenv';
 import helmet from 'helmet';
 import connectDatabase from "./utils/mongoose";
 
+
 dotenv.config();
 
 const PORT = +(process.env.PORT || 3001);
