@@ -1,63 +1,64 @@
 import { startSession } from "mongoose";
 import { ServerError } from '../common/error';
-import { default as RegisterRoomModel } from "../models/RegisterRoom";
+import { default as HotelModel } from "../models/Hotel";
 import UserTokenModel from "../models/UserToken";
 import { comparePassword, decodePassword, hashPassword } from '../utils/encryption';
 import { signCredentials } from '../utils/jwtHelper';
-import RegisterRoom from '../../../models/RegisterRoom';
+import Hotel from '../../../models/Hotel';
 
 
 export default {
-  create: async (args: { idClient: string, idRoom: string , idAccount: string , status : boolean , start : number , end : number , total : string ,pay : number  }) => {
-    const { idClient, idRoom ,idAccount ,status,start,end, total , pay} = args;
-    // const exRegisterRoom = await RegisterRoomModel.findOne({ sdt });
-    // if (exRegisterRoom) throw new ServerError({ message: 'This sdt already exits' });
+  create: async (args: { image: string, codeHotel: string , nameHotel: string , address : string , introduce : string , title :string  }) => {
+    const { image , codeHotel, nameHotel , address, introduce ,title} = args;
+    console.log("create hotel ")
+    // const exHotel = await HotelModel.findOne({ sdt });
+    // if (exHotel) throw new ServerError({ message: 'This sdt already exits' });
     const session = await startSession();
     try {
-        const result = await RegisterRoomModel.create([{ idClient, idRoom ,idAccount ,status,start,end, total , pay}], { session });
+        const result = await HotelModel.create([{ image , codeHotel, nameHotel , address, introduce ,title}], { session });
         await session.endSession();
         return {
-          customer: result
+          hotel: result
         }
     } catch (error) {
       console.log('error:',error)
       throw new ServerError({ data: -1, message: "Register error (Transaction)" });
     }
   },
-  update: async (args: {id: string, update:RegisterRoom }) => {
+  update: async (args: {id: string, update:Hotel }) => {
     const { id,update} = args;
-    console.log('RegisterRoom update id:',id);
-    console.log('RegisterRoom update update:',update);
+    console.log('Customer update id:',id);
+    console.log('Customer update update:',update);
     const session = await startSession();
     try {
-        const customer = await RegisterRoomModel.findByIdAndUpdate(
+        const hotel = await HotelModel.findByIdAndUpdate(
           id, 
           update,
           { new: true }
         )
-        console.log('RegisterRoom find id:',customer);
+        console.log('Customer find id:',hotel);
         // await session.endSession();
         return {
-          customer: customer
+          hotel: hotel
         }
     } catch (error) {
       console.log('error:',error)
       throw new ServerError({ data: -1, message: "Register error (Transaction)" });
     }
   },
-  delete: async (args: {id: string, update: RegisterRoom }) => {
+  delete: async (args: {id: string, update: Hotel }) => {
     const { id,update} = args;
     console.log('Delete update id:',id);
     try {
-      const customer = await RegisterRoomModel.findByIdAndDelete(
+      const hotel = await HotelModel.findByIdAndDelete(
         id, 
         update,
         // { new: true }
       )
-      console.log('RegisterRoom find id:',customer);
+      console.log('Hotel find id:',hotel);
       // await session.endSession();
       return {
-        customer: customer
+        hotel: hotel
       }
   } catch (error) {
     console.log('error:',error)
@@ -66,11 +67,11 @@ export default {
     //Viet them code vao day
   },
   get: async (args: { }) => {
-    const customer = await RegisterRoomModel.find({})
-    console.log('RegisterRoom find id:',customer);
+    const hotel = await HotelModel.find({})
+    console.log('Hotel find id:',hotel);
 
     return { 
-      customer: customer
+      hotel: hotel
     }
     //Viet them code vao day
   }

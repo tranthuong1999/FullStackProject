@@ -1,63 +1,63 @@
 import { startSession } from "mongoose";
 import { ServerError } from '../common/error';
-import { default as RegisterRoomModel } from "../models/RegisterRoom";
+import { default as ServiceModel } from "../models/Service";
 import UserTokenModel from "../models/UserToken";
 import { comparePassword, decodePassword, hashPassword } from '../utils/encryption';
 import { signCredentials } from '../utils/jwtHelper';
-import RegisterRoom from '../../../models/RegisterRoom';
+import Service from '../../../models/Service';
 
 
 export default {
-  create: async (args: { idClient: string, idRoom: string , idAccount: string , status : boolean , start : number , end : number , total : string ,pay : number  }) => {
-    const { idClient, idRoom ,idAccount ,status,start,end, total , pay} = args;
-    // const exRegisterRoom = await RegisterRoomModel.findOne({ sdt });
-    // if (exRegisterRoom) throw new ServerError({ message: 'This sdt already exits' });
+  create: async (args: { name: string, price : string  }) => {
+    const { name, price} = args;
+    // const exService = await ServiceModel.findOne({ sdt });
+    // if (exService) throw new ServerError({ message: 'This sdt already exits' });
     const session = await startSession();
     try {
-        const result = await RegisterRoomModel.create([{ idClient, idRoom ,idAccount ,status,start,end, total , pay}], { session });
+        const result = await ServiceModel.create([{ name, price}], { session });
         await session.endSession();
         return {
-          customer: result
+          service: result
         }
     } catch (error) {
       console.log('error:',error)
       throw new ServerError({ data: -1, message: "Register error (Transaction)" });
     }
   },
-  update: async (args: {id: string, update:RegisterRoom }) => {
+  update: async (args: {id: string, update:Service }) => {
     const { id,update} = args;
-    console.log('RegisterRoom update id:',id);
-    console.log('RegisterRoom update update:',update);
+    console.log('Customer update id:',id);
+    console.log('Customer update update:',update);
     const session = await startSession();
     try {
-        const customer = await RegisterRoomModel.findByIdAndUpdate(
+        const service = await ServiceModel.findByIdAndUpdate(
           id, 
           update,
           { new: true }
         )
-        console.log('RegisterRoom find id:',customer);
+        console.log('Customer find id:',service);
         // await session.endSession();
         return {
-          customer: customer
+          service: service
         }
     } catch (error) {
       console.log('error:',error)
       throw new ServerError({ data: -1, message: "Register error (Transaction)" });
     }
   },
-  delete: async (args: {id: string, update: RegisterRoom }) => {
+  delete: async (args: {id: string, update: Service }) => {
     const { id,update} = args;
     console.log('Delete update id:',id);
     try {
-      const customer = await RegisterRoomModel.findByIdAndDelete(
+      const service = await ServiceModel.findByIdAndDelete(
         id, 
         update,
         // { new: true }
       )
-      console.log('RegisterRoom find id:',customer);
+      console.log('Service find id:',service);
       // await session.endSession();
       return {
-        customer: customer
+        service: service
       }
   } catch (error) {
     console.log('error:',error)
@@ -66,11 +66,11 @@ export default {
     //Viet them code vao day
   },
   get: async (args: { }) => {
-    const customer = await RegisterRoomModel.find({})
-    console.log('RegisterRoom find id:',customer);
+    const service = await ServiceModel.find({})
+    console.log('Service find id:',service);
 
     return { 
-      customer: customer
+      service: service
     }
     //Viet them code vao day
   }

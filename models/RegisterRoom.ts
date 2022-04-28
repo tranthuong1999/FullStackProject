@@ -9,7 +9,7 @@ export default class RegisterRoom {
     start: Date;
     end : Date;
     total : String;
-    pay : String
+    pay : Number
 
     constructor(args: any = {}) {
       this._id = args._id;

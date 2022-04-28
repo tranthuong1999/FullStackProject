@@ -12,11 +12,10 @@ const registerRoomSchema = new Schema<RegisterRoomDocument>({
   idRoom : String ,
   idAccount : String,
   status : Boolean ,
-  start : Date ,
-  end : Date ,
+  start : Number ,
+  end : Number ,
   total : String ,
-  pay :String
-
+  pay :Number
 }, {
   versionKey: false,
   timestamps: true
